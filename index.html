@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRT 2006-2007 — Grand Reunion Tour</title>
+<meta name="description" content="A private invite-only digital reunion platform for the GRT 2006-2007 class.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-emblem"></div>
+  <div class="loader-title">GRT 2006–2007</div>
+  <div class="loader-sub">Grand Reunion Tour</div>
+</div>
+
+<!-- 3D BACKGROUND -->
+<canvas id="bg-canvas"></canvas>
+<div class="gradient-overlay"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo">GRT · Reunion</div>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#invitation">Invitation</a></li>
+    <li><a href="#directory">Directory</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#announcements">Announcements</a></li>
+    <li><a href="#rsvp">RSVP</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" id="nav-toggle">&#9776;</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-eyebrow">You Are Cordially Invited</div>
+  <h1 class="hero-title" id="hero-title-text">GRT 2006–2007 Grand Reunion Tour</h1>
+  <p class="hero-subtitle" id="hero-subtitle-text">Once classmates, forever family. Join us as we relive the golden days.</p>
+
+  <div class="countdown glass" style="padding:24px 30px;">
+    <div class="countdown-block"><div class="countdown-num" id="cd-days">00</div><div class="countdown-label">Days</div></div>
+    <div class="countdown-block"><div class="countdown-num" id="cd-hours">00</div><div class="countdown-label">Hours</div></div>
+    <div class="countdown-block"><div class="countdown-num" id="cd-mins">00</div><div class="countdown-label">Minutes</div></div>
+    <div class="countdown-block"><div class="countdown-num" id="cd-secs">00</div><div class="countdown-label">Seconds</div></div>
+  </div>
+
+  <div class="hero-actions">
+    <a href="#rsvp" class="btn btn-primary">Confirm Your RSVP</a>
+    <a href="#invitation" class="btn btn-outline">View Invitation</a>
+  </div>
+</section>
+
+<!-- QUICK NAV -->
+<section id="quick-nav-section">
+  <div class="section-head">
+    <div class="section-eyebrow">Explore</div>
+    <h2 class="section-title">Find Your Way Around</h2>
+  </div>
+  <div class="quick-nav">
+    <a href="#invitation" class="quick-card glass" style="text-decoration:none;color:inherit;">
+      <div class="quick-icon">&#9993;</div><h3>Invitation</h3><p>Event details &amp; schedule</p>
+    </a>
+    <a href="#directory" class="quick-card glass" style="text-decoration:none;color:inherit;">
+      <div class="quick-icon">&#9786;</div><h3>Directory</h3><p>Find your classmates</p>
+    </a>
+    <a href="#gallery" class="quick-card glass" style="text-decoration:none;color:inherit;">
+      <div class="quick-icon">&#128247;</div><h3>Gallery</h3><p>Memories &amp; photos</p>
+    </a>
+    <a href="#rsvp" class="quick-card glass" style="text-decoration:none;color:inherit;">
+      <div class="quick-icon">&#10003;</div><h3>RSVP</h3><p>Confirm attendance</p>
+    </a>
+  </div>
+</section>
+
+<!-- LATEST ANNOUNCEMENT -->
+<section id="latest-announcement-section">
+  <div class="section-head">
+    <div class="section-eyebrow">Stay Updated</div>
+    <h2 class="section-title">Latest Announcement</h2>
+  </div>
+  <div id="latest-announcement" style="max-width:720px;margin:0 auto;"></div>
+</section>
+
+<!-- INVITATION -->
+<section id="invitation">
+  <div class="section-head">
+    <div class="section-eyebrow">The Invitation</div>
+    <h2 class="section-title">Join Us for an Unforgettable Evening</h2>
+  </div>
+  <div class="invite-grid">
+    <div class="glass" style="padding:40px;">
+      <div class="invite-detail">
+        <div>
+          <div class="label">Date &amp; Time</div>
+          <div id="invite-date">To be announced</div>
+        </div>
+      </div>
+      <div class="invite-detail">
+        <div>
+          <div class="label">Venue</div>
+          <div id="invite-venue">To be announced</div>
+        </div>
+      </div>
+      <div class="invite-detail">
+        <div>
+          <div class="label">Dress Code</div>
+          <div>Smart formal / Traditional attire welcome</div>
+        </div>
+      </div>
+      <div class="invite-detail">
+        <div>
+          <div class="label">Program</div>
+          <div>Reception · Dinner · Memories &amp; Awards · Cultural Evening</div>
+        </div>
+      </div>
+    </div>
+    <img src="/reunion_001.jpg" alt="Reunion" class="glass" style="width:100%;height:100%;object-fit:cover;border-radius:22px;max-height:420px;">
+  </div>
+</section>
+
+<!-- FEATURED MEMORIES / GALLERY PREVIEW -->
+<section id="memories">
+  <div class="section-head">
+    <div class="section-eyebrow">Featured Memories</div>
+    <h2 class="section-title">Glimpses From the Tour</h2>
+  </div>
+  <div class="gallery-grid" id="gallery-preview"></div>
+</section>
+
+<!-- DIRECTORY -->
+<section id="directory">
+  <div class="section-head">
+    <div class="section-eyebrow">Class of 2006–2007</div>
+    <h2 class="section-title">Student Directory</h2>
+    <p class="section-desc">Browse classmates from the Boys and Girls groups, search by name, or filter alphabetically.</p>
+  </div>
+  <div class="directory-controls">
+    <input type="text" id="directory-search" placeholder="Search by name...">
+    <select id="directory-gender">
+      <option value="">All Classmates</option>
+      <option value="Male">Boys</option>
+      <option value="Female">Girls</option>
+    </select>
+  </div>
+  <div class="alpha-filter" id="alpha-filter"></div>
+  <div class="card-grid" id="directory-grid"></div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-head">
+    <div class="section-eyebrow">Photo Gallery</div>
+    <h2 class="section-title">The Full Collection</h2>
+  </div>
+  <div class="gallery-grid" id="gallery-grid"></div>
+</section>
+
+<!-- ANNOUNCEMENTS -->
+<section id="announcements">
+  <div class="section-head">
+    <div class="section-eyebrow">Announcements</div>
+    <h2 class="section-title">News &amp; Updates</h2>
+  </div>
+  <div id="announcements-list" style="max-width:720px;margin:0 auto;"></div>
+</section>
+
+<!-- RSVP -->
+<section id="rsvp">
+  <div class="section-head">
+    <div class="section-eyebrow">Will You Join Us?</div>
+    <h2 class="section-title">RSVP</h2>
+  </div>
+  <form id="rsvp-form" class="glass form-panel">
+    <div class="form-row">
+      <label for="rsvp-name">Full Name</label>
+      <input type="text" id="rsvp-name" name="full_name" required maxlength="150">
+    </div>
+    <div class="form-row">
+      <label for="rsvp-email">Email (optional)</label>
+      <input type="email" id="rsvp-email" name="email" maxlength="150">
+    </div>
+    <div class="form-row">
+      <label for="rsvp-phone">Phone (optional)</label>
+      <input type="text" id="rsvp-phone" name="phone" maxlength="30">
+    </div>
+    <div class="form-row">
+      <label>Your Response</label>
+      <div class="rsvp-options">
+        <div class="rsvp-option glass" data-value="Accept">Accept</div>
+        <div class="rsvp-option glass" data-value="Decline">Decline</div>
+        <div class="rsvp-option glass" data-value="Maybe">Maybe</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="rsvp-message">Message (optional)</label>
+      <textarea id="rsvp-message" name="message" maxlength="2000"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Submit RSVP</button>
+    <div class="form-status" id="rsvp-status"></div>
+  </form>
+</section>
+
+<!-- CONTACT / FOOTER -->
+<section id="contact">
+  <div class="section-head">
+    <div class="section-eyebrow">Get in Touch</div>
+    <h2 class="section-title">Contact</h2>
+  </div>
+  <div class="glass" style="max-width:520px;margin:0 auto;padding:34px;text-align:center;">
+    <p style="margin-bottom:10px;">Email: <span id="contact-email">—</span></p>
+    <p>Phone: <span id="contact-phone">—</span></p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">GRT 2006–2007</div>
+  <p>Grand Reunion Tour · A private gathering of classmates, made with memories.</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button class="lightbox-close" id="lightbox-close">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+  <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="/script.js"></script>
+</body>
+</html>

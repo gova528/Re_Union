@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Administrator — GRT 2006-2007</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="admin-body">
+
+<!-- STAGE 1: SECRET ACCESS CODE GATE -->
+<div class="gate-screen" id="gate-screen">
+  <div class="gate-panel glass">
+    <h2>Restricted Access</h2>
+    <p>Enter the Secret Access Code to continue.</p>
+    <input type="password" id="gate-code" placeholder="Secret Access Code" autocomplete="off">
+    <button class="btn btn-primary" id="gate-submit" style="width:100%;justify-content:center;">Continue</button>
+    <div class="error-msg" id="gate-error"></div>
+  </div>
+</div>
+
+<!-- STAGE 2: ADMIN LOGIN -->
+<div class="login-screen" id="login-screen" style="display:none;">
+  <div class="login-panel glass">
+    <h2>Administrator Login</h2>
+    <p>Sign in to manage the GRT Reunion platform.</p>
+    <input type="text" id="login-username" placeholder="Username" autocomplete="off">
+    <input type="password" id="login-password" placeholder="Password" autocomplete="off">
+    <button class="btn btn-primary" id="login-submit" style="width:100%;justify-content:center;">Login</button>
+    <div class="error-msg" id="login-error"></div>
+  </div>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div class="admin-dashboard" id="admin-dashboard">
+  <aside class="admin-sidebar">
+    <div class="logo">GRT · Admin</div>
+    <div class="admin-nav-item active" data-panel="panel-dashboard">Dashboard</div>
+    <div class="admin-nav-item" data-panel="panel-students">Students</div>
+    <div class="admin-nav-item" data-panel="panel-gallery">Gallery</div>
+    <div class="admin-nav-item" data-panel="panel-announcements">Announcements</div>
+    <div class="admin-nav-item" data-panel="panel-rsvp">RSVP Responses</div>
+    <div class="admin-nav-item" data-panel="panel-settings">Site Settings</div>
+    <div class="admin-nav-item" data-panel="panel-logs">Activity Log</div>
+    <div class="admin-nav-item" id="logout-btn" style="margin-top:30px;color:#e2766d;">Logout</div>
+  </aside>
+
+  <main class="admin-main">
+
+    <!-- DASHBOARD -->
+    <section class="admin-panel active" id="panel-dashboard">
+      <h2>Dashboard Overview</h2>
+      <div class="stat-grid" id="stat-grid"></div>
+    </section>
+
+    <!-- STUDENTS -->
+    <section class="admin-panel" id="panel-students">
+      <h2>Student Profiles</h2>
+      <form id="student-form" class="admin-form-grid glass" enctype="multipart/form-data">
+        <input type="hidden" id="student-id" value="">
+        <div><label>Full Name</label><input type="text" id="student-name" required></div>
+        <div><label>Gender</label>
+          <select id="student-gender"><option value="Male">Boy</option><option value="Female">Girl</option></select>
+        </div>
+        <div><label>Occupation</label><input type="text" id="student-occupation"></div>
+        <div><label>Current City</label><input type="text" id="student-city"></div>
+        <div><label>Contact Info</label><input type="text" id="student-contact"></div>
+        <div><label>Photo</label><input type="file" id="student-photo" accept="image/*"></div>
+        <div class="full"><label>Biography</label><textarea id="student-bio" rows="3" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);color:var(--text-primary);padding:12px;border-radius:10px;"></textarea></div>
+        <div class="full">
+          <button type="submit" class="btn btn-primary">Save Student</button>
+          <button type="button" class="btn btn-outline" id="student-cancel-edit">Cancel Edit</button>
+        </div>
+      </form>
+      <div class="table-wrap glass">
+        <table class="admin-table">
+          <thead><tr><th>Name</th><th>Group</th><th>Occupation</th><th>City</th><th>Actions</th></tr></thead>
+          <tbody id="students-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="admin-panel" id="panel-gallery">
+      <h2>Photo Gallery</h2>
+      <form id="photo-form" class="admin-form-grid glass" enctype="multipart/form-data">
+        <div><label>Caption</label><input type="text" id="photo-caption"></div>
+        <div><label>Photo Date</label><input type="date" id="photo-date"></div>
+        <div class="full"><label>Image File</label><input type="file" id="photo-file" accept="image/*" required></div>
+        <div class="full"><button type="submit" class="btn btn-primary">Upload Photo</button></div>
+      </form>
+      <div class="table-wrap glass">
+        <table class="admin-table">
+          <thead><tr><th>Preview</th><th>Caption</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="photos-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ANNOUNCEMENTS -->
+    <section class="admin-panel" id="panel-announcements">
+      <h2>Announcements</h2>
+      <form id="announcement-form" class="admin-form-grid glass">
+        <input type="hidden" id="announcement-id" value="">
+        <div class="full"><label>Title</label><input type="text" id="announcement-title" required></div>
+        <div class="full"><label>Body</label><textarea id="announcement-body" rows="4" required style="width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);color:var(--text-primary);padding:12px;border-radius:10px;"></textarea></div>
+        <div class="full">
+          <button type="submit" class="btn btn-primary">Publish</button>
+          <button type="button" class="btn btn-outline" id="announcement-cancel-edit">Cancel Edit</button>
+        </div>
+      </form>
+      <div class="table-wrap glass">
+        <table class="admin-table">
+          <thead><tr><th>Title</th><th>Published</th><th>Likes</th><th>Actions</th></tr></thead>
+          <tbody id="announcements-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- RSVP -->
+    <section class="admin-panel" id="panel-rsvp">
+      <h2>RSVP Responses</h2>
+      <div class="table-wrap glass">
+        <table class="admin-table">
+          <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Response</th><th>Message</th><th>Submitted</th></tr></thead>
+          <tbody id="rsvp-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="admin-panel" id="panel-settings">
+      <h2>Website Settings</h2>
+      <form id="settings-form" class="admin-form-grid glass">
+        <div class="full"><label>Hero Title</label><input type="text" id="set-hero_title"></div>
+        <div class="full"><label>Hero Subtitle</label><input type="text" id="set-hero_subtitle"></div>
+        <div><label>Event Date (YYYY-MM-DD HH:MM:SS)</label><input type="text" id="set-event_date"></div>
+        <div><label>Event Venue</label><input type="text" id="set-event_venue"></div>
+        <div><label>Contact Email</label><input type="text" id="set-contact_email"></div>
+        <div><label>Contact Phone</label><input type="text" id="set-contact_phone"></div>
+        <div class="full"><button type="submit" class="btn btn-primary">Save Settings</button></div>
+      </form>
+    </section>
+
+    <!-- ACTIVITY LOG -->
+    <section class="admin-panel" id="panel-logs">
+      <h2>Activity Log</h2>
+      <div class="table-wrap glass">
+        <table class="admin-table">
+          <thead><tr><th>Admin</th><th>Action</th><th>Details</th><th>When</th></tr></thead>
+          <tbody id="logs-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================================
+   admin.html inline script — gate, login, dashboard CRUD
+   ========================================================================= */
+
+const el = (id) => document.getElementById(id);
+let csrfToken = '';
+
+async function refreshCsrfToken() {
+  try {
+    const res = await fetch('/api/admin/csrf-token');
+    const data = await res.json();
+    if (data.success) csrfToken = data.csrf_token;
+  } catch (e) { /* non-fatal */ }
+}
+
+function showToast(msg, isError) {
+  const t = el('toast');
+  t.textContent = msg;
+  t.style.borderColor = isError ? 'rgba(226,118,109,0.6)' : '';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+async function apiCall(url, method, body, isForm) {
+  const opts = { method, headers: {} };
+  if (method !== 'GET') {
+    opts.headers['X-CSRF-Token'] = csrfToken;
+  }
+  if (isForm) {
+    if (csrfToken) body.append('csrf_token', csrfToken);
+    opts.body = body;
+  } else if (body) {
+    opts.headers['Content-Type'] = 'application/json';
+    opts.body = JSON.stringify(Object.assign({}, body, { csrf_token: csrfToken }));
+  }
+  const res = await fetch(url, opts);
+  return res.json();
+}
+
+/* ---------------- STAGE 1: GATE ---------------- */
+el('gate-submit').addEventListener('click', submitGate);
+el('gate-code').addEventListener('keydown', (e) => { if (e.key === 'Enter') submitGate(); });
+
+async function submitGate() {
+  const code = el('gate-code').value.trim();
+  const result = await apiCall('/api/admin/verify-code', 'POST', { code });
+  if (result.success) {
+    el('gate-screen').style.display = 'none';
+    el('login-screen').style.display = 'flex';
+  } else {
+    el('gate-error').textContent = 'Access Denied';
+  }
+}
+
+/* ---------------- STAGE 2: LOGIN ---------------- */
+el('login-submit').addEventListener('click', submitLogin);
+el('login-password').addEventListener('keydown', (e) => { if (e.key === 'Enter') submitLogin(); });
+
+async function submitLogin() {
+  const username = el('login-username').value.trim();
+  const password = el('login-password').value;
+  const result = await apiCall('/api/admin/login', 'POST', { username, password });
+  if (result.success) {
+    el('login-screen').style.display = 'none';
+    el('admin-dashboard').classList.add('active');
+    await refreshCsrfToken();
+    loadDashboard();
+  } else {
+    el('login-error').textContent = 'Access Denied';
+  }
+}
+
+/* ---------------- SESSION CHECK ON LOAD ---------------- */
+(async function checkSession() {
+  const result = await apiCall('/api/admin/session', 'GET');
+  if (result.logged_in) {
+    el('gate-screen').style.display = 'none';
+    el('login-screen').style.display = 'none';
+    el('admin-dashboard').classList.add('active');
+    await refreshCsrfToken();
+    loadDashboard();
+  } else if (result.gate_passed) {
+    el('gate-screen').style.display = 'none';
+    el('login-screen').style.display = 'flex';
+  }
+})();
+
+/* ---------------- SIDEBAR NAV ---------------- */
+document.querySelectorAll('.admin-nav-item[data-panel]').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.admin-nav-item[data-panel]').forEach(i => i.classList.remove('active'));
+    document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+    item.classList.add('active');
+    el(item.dataset.panel).classList.add('active');
+    if (item.dataset.panel === 'panel-dashboard') loadDashboard();
+    if (item.dataset.panel === 'panel-students') loadStudentsAdmin();
+    if (item.dataset.panel === 'panel-gallery') loadPhotosAdmin();
+    if (item.dataset.panel === 'panel-announcements') loadAnnouncementsAdmin();
+    if (item.dataset.panel === 'panel-rsvp') loadRsvpAdmin();
+    if (item.dataset.panel === 'panel-settings') loadSettingsAdmin();
+    if (item.dataset.panel === 'panel-logs') loadLogsAdmin();
+  });
+});
+
+el('logout-btn').addEventListener('click', async () => {
+  await apiCall('/api/admin/logout', 'POST', {});
+  window.location.reload();
+});
+
+/* ---------------- DASHBOARD ---------------- */
+async function loadDashboard() {
+  const result = await apiCall('/api/admin/stats', 'GET');
+  if (!result.success) return;
+  const s = result.data;
+  el('stat-grid').innerHTML = `
+    <div class="stat-card glass"><div class="num">${s.total_students}</div><div class="label">Total Students</div></div>
+    <div class="stat-card glass"><div class="num">${s.boys}</div><div class="label">Boys</div></div>
+    <div class="stat-card glass"><div class="num">${s.girls}</div><div class="label">Girls</div></div>
+    <div class="stat-card glass"><div class="num">${s.total_photos}</div><div class="label">Gallery Photos</div></div>
+    <div class="stat-card glass"><div class="num">${s.total_announcements}</div><div class="label">Announcements</div></div>
+    <div class="stat-card glass"><div class="num">${s.total_rsvps}</div><div class="label">RSVPs</div></div>
+    <div class="stat-card glass"><div class="num">${s.rsvp_breakdown.Accept}</div><div class="label">Accepted</div></div>
+    <div class="stat-card glass"><div class="num">${s.rsvp_breakdown.Decline}</div><div class="label">Declined</div></div>
+    <div class="stat-card glass"><div class="num">${s.rsvp_breakdown.Maybe}</div><div class="label">Maybe</div></div>
+  `;
+}
+
+/* ---------------- STUDENTS CRUD ---------------- */
+async function loadStudentsAdmin() {
+  const result = await apiCall('/api/students', 'GET');
+  if (!result.success) return;
+  el('students-table-body').innerHTML = result.data.map(s => `
+    <tr>
+      <td>${s.full_name}</td>
+      <td>${s.gender === 'Male' ? 'Boys' : 'Girls'}</td>
+      <td>${s.occupation || ''}</td>
+      <td>${s.current_city || ''}</td>
+      <td>
+        <button class="icon-btn" onclick='editStudent(${JSON.stringify(s).replace(/'/g, "&#39;")})'>Edit</button>
+        <button class="icon-btn danger" onclick="deleteStudent(${s.id})">Delete</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function editStudent(s) {
+  el('student-id').value = s.id;
+  el('student-name').value = s.full_name;
+  el('student-gender').value = s.gender;
+  el('student-occupation').value = s.occupation || '';
+  el('student-city').value = s.current_city || '';
+  el('student-contact').value = s.contact_info || '';
+  el('student-bio').value = s.biography || '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+el('student-cancel-edit').addEventListener('click', () => {
+  el('student-form').reset();
+  el('student-id').value = '';
+});
+
+el('student-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const id = el('student-id').value;
+  const fd = new FormData();
+  fd.append('full_name', el('student-name').value.trim());
+  fd.append('gender', el('student-gender').value);
+  fd.append('occupation', el('student-occupation').value.trim());
+  fd.append('current_city', el('student-city').value.trim());
+  fd.append('contact_info', el('student-contact').value.trim());
+  fd.append('biography', el('student-bio').value.trim());
+  if (el('student-photo').files[0]) fd.append('photo', el('student-photo').files[0]);
+
+  const url = id ? `/api/admin/students/${id}` : '/api/admin/students';
+  const result = await apiCall(url, 'POST', fd, true);
+  if (result.success) {
+    showToast('Student saved successfully.');
+    el('student-form').reset();
+    el('student-id').value = '';
+    loadStudentsAdmin();
+  } else {
+    showToast(result.error || 'Failed to save student.', true);
+  }
+});
+
+async function deleteStudent(id) {
+  if (!confirm('Delete this student profile?')) return;
+  const result = await apiCall(`/api/admin/students/${id}`, 'DELETE', {});
+  if (result.success) { showToast('Student deleted.'); loadStudentsAdmin(); }
+  else showToast(result.error || 'Failed to delete.', true);
+}
+
+/* ---------------- GALLERY CRUD ---------------- */
+async function loadPhotosAdmin() {
+  const result = await apiCall('/api/photos', 'GET');
+  if (!result.success) return;
+  el('photos-table-body').innerHTML = result.data.map(p => `
+    <tr>
+      <td><img src="/${p.file_path}" style="width:70px;height:50px;object-fit:cover;border-radius:6px;"></td>
+      <td>${p.caption || ''}</td>
+      <td>${p.photo_date || ''}</td>
+      <td><button class="icon-btn danger" onclick="deletePhoto(${p.id})">Delete</button></td>
+    </tr>
+  `).join('');
+}
+
+el('photo-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const fd = new FormData();
+  fd.append('caption', el('photo-caption').value.trim());
+  fd.append('photo_date', el('photo-date').value);
+  fd.append('photo', el('photo-file').files[0]);
+  const result = await apiCall('/api/admin/photos', 'POST', fd, true);
+  if (result.success) {
+    showToast('Photo uploaded.');
+    el('photo-form').reset();
+    loadPhotosAdmin();
+  } else {
+    showToast(result.error || 'Failed to upload.', true);
+  }
+});
+
+async function deletePhoto(id) {
+  if (!confirm('Delete this photo?')) return;
+  const result = await apiCall(`/api/admin/photos/${id}`, 'DELETE', {});
+  if (result.success) { showToast('Photo deleted.'); loadPhotosAdmin(); }
+  else showToast(result.error || 'Failed to delete.', true);
+}
+
+/* ---------------- ANNOUNCEMENTS CRUD ---------------- */
+async function loadAnnouncementsAdmin() {
+  const result = await apiCall('/api/announcements', 'GET');
+  if (!result.success) return;
+  el('announcements-table-body').innerHTML = result.data.map(a => `
+    <tr>
+      <td>${a.title}</td>
+      <td>${new Date(a.published_at.replace(' ', 'T')).toDateString()}</td>
+      <td>${a.like_count}</td>
+      <td>
+        <button class="icon-btn" onclick='editAnnouncement(${JSON.stringify(a).replace(/'/g, "&#39;")})'>Edit</button>
+        <button class="icon-btn danger" onclick="deleteAnnouncement(${a.id})">Delete</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function editAnnouncement(a) {
+  el('announcement-id').value = a.id;
+  el('announcement-title').value = a.title;
+  el('announcement-body').value = a.body;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+el('announcement-cancel-edit').addEventListener('click', () => {
+  el('announcement-form').reset();
+  el('announcement-id').value = '';
+});
+
+el('announcement-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const id = el('announcement-id').value;
+  const payload = { title: el('announcement-title').value.trim(), body: el('announcement-body').value.trim() };
+  const url = id ? `/api/admin/announcements/${id}` : '/api/admin/announcements';
+  const method = id ? 'PUT' : 'POST';
+  const result = await apiCall(url, method, payload);
+  if (result.success) {
+    showToast('Announcement saved.');
+    el('announcement-form').reset();
+    el('announcement-id').value = '';
+    loadAnnouncementsAdmin();
+  } else {
+    showToast(result.error || 'Failed to save.', true);
+  }
+});
+
+async function deleteAnnouncement(id) {
+  if (!confirm('Delete this announcement?')) return;
+  const result = await apiCall(`/api/admin/announcements/${id}`, 'DELETE', {});
+  if (result.success) { showToast('Announcement deleted.'); loadAnnouncementsAdmin(); }
+  else showToast(result.error || 'Failed to delete.', true);
+}
+
+/* ---------------- RSVP (read-only) ---------------- */
+async function loadRsvpAdmin() {
+  const result = await apiCall('/api/admin/rsvps', 'GET');
+  if (!result.success) return;
+  el('rsvp-table-body').innerHTML = result.data.map(r => `
+    <tr>
+      <td>${r.full_name}</td>
+      <td>${r.email || ''}</td>
+      <td>${r.phone || ''}</td>
+      <td>${r.response}</td>
+      <td>${r.message || ''}</td>
+      <td>${new Date(r.submitted_at.replace(' ', 'T')).toLocaleString()}</td>
+    </tr>
+  `).join('');
+}
+
+/* ---------------- SETTINGS ---------------- */
+async function loadSettingsAdmin() {
+  const result = await apiCall('/api/settings', 'GET');
+  if (!result.success) return;
+  const s = result.data;
+  ['hero_title', 'hero_subtitle', 'event_date', 'event_venue', 'contact_email', 'contact_phone'].forEach(k => {
+    if (el('set-' + k)) el('set-' + k).value = s[k] || '';
+  });
+}
+
+el('settings-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const payload = {};
+  ['hero_title', 'hero_subtitle', 'event_date', 'event_venue', 'contact_email', 'contact_phone'].forEach(k => {
+    payload[k] = el('set-' + k).value.trim();
+  });
+  const result = await apiCall('/api/admin/settings', 'PUT', payload);
+  if (result.success) showToast('Settings updated.');
+  else showToast(result.error || 'Failed to update settings.', true);
+});
+
+/* ---------------- ACTIVITY LOGS ---------------- */
+async function loadLogsAdmin() {
+  const result = await apiCall('/api/admin/logs', 'GET');
+  if (!result.success) return;
+  el('logs-table-body').innerHTML = result.data.map(l => `
+    <tr>
+      <td>${l.username || '—'}</td>
+      <td>${l.action}</td>
+      <td>${l.details || ''}</td>
+      <td>${new Date(l.created_at.replace(' ', 'T')).toLocaleString()}</td>
+    </tr>
+  `).join('');
+}
+</script>
+</body>
+</html>
